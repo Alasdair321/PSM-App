@@ -1,0 +1,14 @@
+{% extends "base_generic.html" %}
+<h1>hello</h1>
+{% block content %}
+<h1>
+    Posts:
+</h1>
+
+{% for media in media_list %}
+<div>
+    <p>{{ media.date }}</p>
+    <p>{{ media.message }}</p>
+</div>
+{% endfor %}
+{% endblock %}

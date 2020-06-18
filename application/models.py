@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.core.files.storage import FileSystemStorage
+from django.urls import reverse
 import os
 import time
 
@@ -33,5 +34,9 @@ class Media(models.Model):
         blank=True,
         help_text='Message or media caption'
     )
-    served_file = models.FileField(upload_to=os.path.join(time.strftime('%Y%m%d%H%M%S', time.gmtime())), null=True)
-    raw_file = models.FileField(upload_to=os.path.join('raw', time.strftime('%Y%m%d%H%M%S', time.gmtime())), null=True)
+    served_file = models.FileField(upload_to=os.path.join(time.strftime('%Y%m%d%H%M%S', time.gmtime())), null=True, blank=True)
+    raw_file = models.FileField(upload_to=os.path.join('raw', time.strftime('%Y%m%d%H%M%S', time.gmtime())), null=True, blank=True)
+
+    def get_absolute_url(self):
+        """Returns the url to access a detail record for this book."""
+        return reverse('content-detail', args=[str(self.id)])
